@@ -10,6 +10,7 @@ Use ``pwgen-passphrase`` to generate secure (yet easy to remember) random passph
 See legendary `xkcd: Password Strength <https://xkcd.com/936>`_ comic strip for more details ;-)
 
 Included wordlists are:
+
 - `diceware <http://world.std.com/~reinhold/diceware.html>`_ (7776 words)
 - `bip0039 <https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki>`_ (2048 words)
 - `skey <https://tools.ietf.org/html/rfc1760>`_ (2048 words)
