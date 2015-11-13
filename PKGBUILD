@@ -8,6 +8,7 @@ url="https://github.com/xmikos/pwgen-passphrase"
 license=('GPL3')
 depends=('python')
 makedepends=('python-setuptools')
+optdepends=('python-pyqt5: copying to clipboard'
 source=(https://github.com/xmikos/pwgen-passphrase/archive/v$pkgver.tar.gz)
 
 build() {
