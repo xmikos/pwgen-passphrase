@@ -1,6 +1,13 @@
 #!/usr/bin/env python
 
-import sys, os, random, math, argparse
+import sys, os, random, math, argparse, unicodedata
+
+# Try to import new regex module (mainly for better Unicode support, e.g. '[\p{Ll}]+')
+# If regex is not available import standard re module
+try:
+    import regex as re
+except ImportError:
+    import re
 
 # Use secure system random number generator
 # (uses /dev/urandom on Unix and CryptGenRandom on Windows)
@@ -25,6 +32,16 @@ def copy_to_clipboard(text):
     #QApplication.sendEvent(clipboard, event)
     QTimer.singleShot(500, app.quit)
     app.exec_()
+
+
+def unicode_to_ascii(text):
+    """Transliterate unicode characters to ASCII"""
+    return unicodedata.normalize('NFKD', text).encode('ascii', 'ignore').decode()
+
+
+def uniq(l):
+    """Remove duplicates from list"""
+    return list(set(l))
 
 
 def generate_passphrase(wordlist, length, separator=' ', transform=None):
@@ -76,23 +93,36 @@ def main():
                         help='limit minimum length of word (default is unlimited)')
     parser.add_argument('--max', type=int, default=None,
                         help='limit maximum length of word (default is unlimited)')
+    parser.add_argument('-r', '--transliterate', action='store_true',
+                        help='transliterate Unicode characters to ASCII and remove duplicates')
+    parser.add_argument('-e', '--regex', default=None,
+                        help='remove words that do not match regular expression')
     parser.add_argument('--version', action='version',
                         version='%(prog)s {}'.format(__version__))
 
     args = parser.parse_args()
 
     if args.wordlist_file:
-        wordlist = args.wordlist_file.read().splitlines()
+        wordlist_text = args.wordlist_file.read()
     else:
-        wordlist = open('{}/wordlists/{}.txt'.format(
+        wordlist_text = open('{}/wordlists/{}.txt'.format(
             os.path.dirname(os.path.abspath(__file__)), args.wordlist
-        )).read().splitlines()
+        )).read()
+
+    if args.transliterate:
+        wordlist = uniq(unicode_to_ascii(wordlist_text).splitlines())
+    else:
+        wordlist = wordlist_text.splitlines()
 
     if args.min:
         wordlist = [w for w in wordlist if len(w) >= args.min]
 
     if args.max:
         wordlist = [w for w in wordlist if len(w) <= args.max]
+
+    if args.regex:
+        regex_filter = re.compile(args.regex)
+        wordlist = [w for w in wordlist if regex_filter.search(w)]
 
     if args.bits:
         args.length = math.ceil(args.bits / math.log2(len(wordlist)))
