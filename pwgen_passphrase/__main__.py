@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys, os, random, math, argparse, unicodedata
+import sys, os, random, math, argparse, unicodedata, gzip, bz2, lzma
 
 # Try to import new regex module (mainly for better Unicode support, e.g. '[\p{Ll}]+')
 # If regex is not available import standard re module
@@ -12,6 +12,9 @@ except ImportError:
 # Use secure system random number generator
 # (uses /dev/urandom on Unix and CryptGenRandom on Windows)
 system_random = random.SystemRandom()
+
+# Regular expression for extracting wordlist name from filename
+re_wordlist = re.compile('^(?P<wordlist>.*?)([.]txt)?([.](gz|bz2|xz|lzma))?$')
 
 __version__ = '1.0'
 
@@ -44,6 +47,27 @@ def uniq(l):
     return list(set(l))
 
 
+def list_wordlists():
+    """List all installed wordlist files"""
+    wordlists_path = '{}/wordlists'.format(os.path.dirname(os.path.abspath(__file__)))
+    return {re_wordlist.search(os.path.basename(f)).group('wordlist'): os.path.join(wordlists_path, f)
+            for f in os.listdir(wordlists_path)}
+
+
+def read_wordlist(filename):
+    """Read wordlist file (can be .gz, .bz2, .xz or .lzma compressed)"""
+    ext = os.path.splitext(filename)[1]
+    if ext in ['.gz']:
+        f = gzip.open(filename, 'rt')
+    elif ext in ['.bz2']:
+        f = bz2.open(filename, 'rt')
+    elif ext in ['.xz', '.lzma']:
+        f = lzma.open(filename, 'rt')
+    else:
+        f = open(filename)
+    return f.read()
+
+
 def generate_passphrase(wordlist, length, separator=' ', transform=None):
     """Generate random passphrase from wordlist"""
     words = []
@@ -54,6 +78,8 @@ def generate_passphrase(wordlist, length, separator=' ', transform=None):
 
 
 def main():
+    wordlists = list_wordlists()
+
     parser = argparse.ArgumentParser(
         prog='pwgen-passphrase',
         description='generate secure random passphrase from wordlist'
@@ -69,7 +95,7 @@ def main():
                         help='generate multiple passphrases (default is 1)')
 
     wordlist_group = parser.add_mutually_exclusive_group()
-    wordlist_group.add_argument('-w', '--wordlist', choices=['diceware', 'bip0039', 'skey', 'cracklib-small'],
+    wordlist_group.add_argument('-w', '--wordlist', choices=wordlists.keys(),
                                 default='diceware',
                                 help='select wordlist (default is diceware)')
     wordlist_group.add_argument('-f', '--wordlist-file', type=argparse.FileType('r'),
@@ -103,11 +129,11 @@ def main():
     args = parser.parse_args()
 
     if args.wordlist_file:
-        wordlist_text = args.wordlist_file.read()
+        wordlist_filename = args.wordlist_file.name
     else:
-        wordlist_text = open('{}/wordlists/{}.txt'.format(
-            os.path.dirname(os.path.abspath(__file__)), args.wordlist
-        )).read()
+        wordlist_filename = wordlists[args.wordlist]
+
+    wordlist_text = read_wordlist(wordlist_filename)
 
     if args.transliterate:
         wordlist = uniq(unicode_to_ascii(wordlist_text).splitlines())
