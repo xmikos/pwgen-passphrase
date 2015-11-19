@@ -12,8 +12,12 @@ setup(
     license='GNU GPLv3',
     packages=['pwgen_passphrase'],
     package_data={
-        "pwgen_passphrase": [
-            "wordlists/*.txt"
+        'pwgen_passphrase': [
+            'wordlists/*.txt',
+            'wordlists/*.txt.gz',
+            'wordlists/*.txt.bz2',
+            'wordlists/*.txt.xz',
+            'wordlists/*.txt.lzma'
         ]
     },
     entry_points={
