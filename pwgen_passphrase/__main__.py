@@ -16,7 +16,7 @@ system_random = random.SystemRandom()
 # Regular expression for extracting wordlist name from filename
 re_wordlist = re.compile('^(?P<wordlist>.*?)([.]txt)?([.](gz|bz2|xz|lzma))?$')
 
-__version__ = '1.0'
+__version__ = '1.1'
 
 
 def copy_to_clipboard(text):

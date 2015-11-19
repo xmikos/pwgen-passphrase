@@ -11,10 +11,12 @@ See legendary `xkcd: Password Strength <https://xkcd.com/936>`_ comic strip for 
 
 Included wordlists are:
 
-- `diceware <http://world.std.com/~reinhold/diceware.html>`_ (7776 words)
-- `bip0039 <https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki>`_ (2048 words)
-- `skey <https://tools.ietf.org/html/rfc1760>`_ (2048 words)
-- `cracklib-small <https://github.com/cracklib/cracklib>`_ (52875 words)
+- `diceware <http://world.std.com/~reinhold/diceware.html>`_ (English: 7776 words)
+- `bip0039 <https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki>`_ (English: 2048 words)
+- `skey <https://tools.ietf.org/html/rfc1760>`_ (English: 2048 words)
+- `cracklib-small <https://github.com/cracklib/cracklib>`_ (English: 52875 words)
+- `aspell-en <http://aspell.net>`_ (English: 123232 words)
+- `aspell-cs <http://aspell.net>`_ (Czech: 304607 words)
 
 Requirements
 ------------
@@ -22,6 +24,8 @@ Requirements
 - `Python 3 <https://www.python.org>`_
 - Optional: `PyQt <https://www.riverbankcomputing.com/software/pyqt/intro>`_
   (for copying generated passphrase to clipboard)
+- Optional: `regex <https://bitbucket.org/mrabarnett/mrab-regex>`_
+  (for better regex filtering, e.g. `^[\p{Ll}]+` for Unicode lower-case letters only)
 
 Usage
 -----
@@ -48,9 +52,9 @@ Help
 ::
 
     usage: pwgen-passphrase [-h] [-t] [-c] [-s SEPARATOR] [-n COUNT]
-                            [-w {diceware,bip0039,skey,cracklib-small} | -f WORDLIST_FILE]
+                            [-w {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,skey} | -f WORDLIST_FILE]
                             [-l LENGTH | -b BITS] [-L | -U | -C] [--min MIN]
-                            [--max MAX] [--version]
+                            [--max MAX] [-r] [-e REGEX] [--version]
     
     generate secure random passphrase from wordlist
     
@@ -62,7 +66,7 @@ Help
                             words separator (default is space)
       -n COUNT, --count COUNT
                             generate multiple passphrases (default is 1)
-      -w {diceware,bip0039,skey,cracklib-small}, --wordlist {diceware,bip0039,skey,cracklib-small}
+      -w {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,skey}, --wordlist {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,skey}
                             select wordlist (default is diceware)
       -f WORDLIST_FILE, --wordlist-file WORDLIST_FILE
                             path to external wordlist file
@@ -75,4 +79,8 @@ Help
       -C, --capitalize      make words capitalized
       --min MIN             limit minimum length of word (default is unlimited)
       --max MAX             limit maximum length of word (default is unlimited)
+      -r, --transliterate   transliterate Unicode characters to ASCII and remove
+                            duplicates
+      -e REGEX, --regex REGEX
+                            remove words that do not match regular expression
       --version             show program's version number and exit

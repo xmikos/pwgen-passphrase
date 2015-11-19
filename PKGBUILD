@@ -1,6 +1,6 @@
 # Maintainer: Michal Krenek (Mikos) <m.krenek@gmail.com>
 pkgname=pwgen-passphrase
-pkgver=1.0
+pkgver=1.1
 pkgrel=1
 pkgdesc="Secure wordlist-based passphrase generator"
 arch=('any')
@@ -8,7 +8,7 @@ url="https://github.com/xmikos/pwgen-passphrase"
 license=('GPL3')
 depends=('python')
 makedepends=('python-setuptools')
-optdepends=('python-pyqt5: copying to clipboard')
+optdepends=('python-pyqt5: copying to clipboard' 'python-regex-hg: better regex Unicode support')
 source=(https://github.com/xmikos/pwgen-passphrase/archive/v$pkgver.tar.gz)
 
 build() {
