@@ -25,7 +25,7 @@ Requirements
 - Optional: `PyQt <https://www.riverbankcomputing.com/software/pyqt/intro>`_
   (for copying generated passphrase to clipboard)
 - Optional: `regex <https://bitbucket.org/mrabarnett/mrab-regex>`_
-  (for better regex filtering, e.g. `^[\p{Ll}]+` for Unicode lower-case letters only)
+  (for better regex filtering, e.g. ``^[\p{Ll}]+`` for Unicode lower-case letters only)
 
 Usage
 -----
