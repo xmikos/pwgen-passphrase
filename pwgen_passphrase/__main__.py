@@ -95,7 +95,7 @@ def main():
                         help='generate multiple passphrases (default is 1)')
 
     wordlist_group = parser.add_mutually_exclusive_group()
-    wordlist_group.add_argument('-w', '--wordlist', choices=wordlists.keys(),
+    wordlist_group.add_argument('-w', '--wordlist', choices=sorted(wordlists.keys()),
                                 default='diceware',
                                 help='select wordlist (default is diceware)')
     wordlist_group.add_argument('-f', '--wordlist-file', type=argparse.FileType('r'),
