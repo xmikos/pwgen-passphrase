@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name='pwgen-passphrase',
-    version='1.1',
+    version='1.2',
     description='Secure wordlist-based passphrase generator',
     author='Michal Krenek (Mikos)',
     author_email='m.krenek@gmail.com',

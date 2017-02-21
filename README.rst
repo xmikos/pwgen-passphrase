@@ -12,6 +12,9 @@ See legendary `xkcd: Password Strength <https://xkcd.com/936>`_ comic strip for 
 Included wordlists are:
 
 - `diceware <http://world.std.com/~reinhold/diceware.html>`_ (English: 7776 words)
+- `eff-long <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>`_ (English: 7776 words)
+- `eff-short <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>`_ (English: 1296 words)
+- `eff-short2 <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>`_ (English: 1296 words)
 - `bip0039 <https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki>`_ (English: 2048 words)
 - `skey <https://tools.ietf.org/html/rfc1760>`_ (English: 2048 words)
 - `cracklib-small <https://github.com/cracklib/cracklib>`_ (English: 52875 words)
@@ -52,7 +55,7 @@ Help
 ::
 
     usage: pwgen-passphrase [-h] [-t] [-c] [-s SEPARATOR] [-n COUNT]
-                            [-w {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,skey} | -f WORDLIST_FILE]
+                            [-w {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,eff-long,eff-short,eff-short2,skey} | -f WORDLIST_FILE]
                             [-l LENGTH | -b BITS] [-L | -U | -C] [--min MIN]
                             [--max MAX] [-r] [-e REGEX] [--version]
     
@@ -66,8 +69,8 @@ Help
                             words separator (default is space)
       -n COUNT, --count COUNT
                             generate multiple passphrases (default is 1)
-      -w {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,skey}, --wordlist {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,skey}
-                            select wordlist (default is diceware)
+      -w {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,eff-long,eff-short,eff-short2,skey}, --wordlist {aspell-cs,aspell-en,bip0039,cracklib-small,diceware,eff-long,eff-short,eff-short2,skey}
+                            select wordlist (default is eff-long)
       -f WORDLIST_FILE, --wordlist-file WORDLIST_FILE
                             path to external wordlist file
       -l LENGTH, --length LENGTH

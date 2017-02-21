@@ -1,6 +1,6 @@
 # Maintainer: Michal Krenek (Mikos) <m.krenek@gmail.com>
 pkgname=pwgen-passphrase
-pkgver=1.1
+pkgver=1.2
 pkgrel=1
 pkgdesc="Secure wordlist-based passphrase generator"
 arch=('any')

@@ -16,7 +16,7 @@ system_random = random.SystemRandom()
 # Regular expression for extracting wordlist name from filename
 re_wordlist = re.compile('^(?P<wordlist>.*?)([.]txt)?([.](gz|bz2|xz|lzma))?$')
 
-__version__ = '1.1'
+__version__ = '1.2'
 
 
 def copy_to_clipboard(text):
@@ -96,8 +96,8 @@ def main():
 
     wordlist_group = parser.add_mutually_exclusive_group()
     wordlist_group.add_argument('-w', '--wordlist', choices=sorted(wordlists.keys()),
-                                default='diceware',
-                                help='select wordlist (default is diceware)')
+                                default='eff-long',
+                                help='select wordlist (default is eff-long)')
     wordlist_group.add_argument('-f', '--wordlist-file', type=argparse.FileType('r'),
                                 help='path to external wordlist file')
 
