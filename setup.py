@@ -6,6 +6,7 @@ setup(
     name='pwgen-passphrase',
     version='1.2',
     description='Secure wordlist-based passphrase generator',
+    long_description=open('README.rst').read(),
     author='Michal Krenek (Mikos)',
     author_email='m.krenek@gmail.com',
     url='https://github.com/xmikos/pwgen-passphrase',
